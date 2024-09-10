@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { CalcIcon } from '@/app/assets/icons';
+import { CalcIcon, NoteIcon } from '@/app/assets/icons';
 import { type PropType, computed, ref } from 'vue';
 import { useWidgetsStore } from '@/entities/widgets'
 
@@ -38,7 +38,7 @@ const toggleCalcWidget = (widgetName: string) => {
                 class="rounded-lg p-1"
                 @click="toggleCalcWidget('note')"
             >
-                <CalcIcon class="w-8 h-8" />
+                <NoteIcon class="w-8 h-8" />
             </button>
         </div>
     </div>

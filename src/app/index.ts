@@ -3,6 +3,7 @@ import './index.css'
 import App from './App.vue'
 import { router } from './providers/routers'
 import { pinia } from './providers/pinia'
+import 'element-plus/dist/index.css'
 
 const app = createApp(App)
 

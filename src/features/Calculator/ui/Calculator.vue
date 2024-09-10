@@ -49,6 +49,7 @@ const buttonHandler = (b) => {
                 :style="`background: ${b.background}; color: ${b.color}`"
                 class="flex justify-center items-center w-16 h-16 text-3xl font-thin shadow-sm"
                 @click="buttonHandler(b)"
+                @mousedown.stop
             >
                 {{ b.label }}
             </button>

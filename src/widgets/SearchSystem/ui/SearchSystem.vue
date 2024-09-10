@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import { Dropdown } from '@/shared/Dropdown'
+import { Dropdown } from '@/shared/ui/Dropdown'
 import { GoogleIcon, YandexIcon } from '@/app/assets/icons'
 
 type SearchSystems = 'google' | 'yandex'
@@ -65,4 +65,4 @@ const goToSearchSystem = () => {
             @keypress.enter="goToSearchSystem"
         >
     </div>
-</template>
+</template>@/shared/ui/Dropdown
