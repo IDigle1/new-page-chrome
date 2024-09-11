@@ -7,7 +7,7 @@ const input = ref('')
 
 const value = ref('')
 
-const buttonHandler = (b) => {
+const buttonHandler = (b: any) => {
     if (b.name === 'equal') {
         value.value = math.evaluate(input.value)
         return

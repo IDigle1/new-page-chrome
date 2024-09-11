@@ -5,9 +5,7 @@ import { router } from './providers/routers'
 import { pinia } from './providers/pinia'
 import 'element-plus/dist/index.css'
 
-const app = createApp(App)
+export const app = createApp(App)
 
 app.use(router)
 app.use(pinia)
-
-export { app }

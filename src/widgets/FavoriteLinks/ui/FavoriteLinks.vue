@@ -59,7 +59,7 @@ watch(() => links, () => {
 
 onMounted(() => {
     try {
-        const data = JSON.parse(localStorage.getItem('favorite-links'))
+        const data = JSON.parse(localStorage.getItem('favorite-links') || '[]')
 
         if (Array.isArray(data)) {
             links.value = data

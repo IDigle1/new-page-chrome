@@ -2,11 +2,21 @@
 import { useWidgetsStore } from '@/entities/widgets'
 import { Calculator } from '@/features/Calculator'
 import { Note } from '@/features/Note'
+import type { ComponentInstance } from 'vue';
 
-const widgets = {
+type MoveHandler = (we: any) => any
+
+interface IWidgets {
+    [key: string]: {
+        component: ComponentInstance<any>
+        moveHandler: MoveHandler | null
+    }
+}
+
+const widgets: IWidgets = {
     calc: {
         component: Calculator,
-        moveHandler: null
+        moveHandler: null 
     },
     note: {
         component: Note,
@@ -22,15 +32,15 @@ const move = (e: any, widgetName: string) => {
     }
 }
 
-const mousedownHanler = (e: MouseEvent, widgetName: keyof typeof widgets) => {
+const mousedownHanler = (e: MouseEvent, widgetName: string) => {
     widgets[widgetName].moveHandler = move(e, widgetName)
     window.addEventListener('mousemove', widgets[widgetName].moveHandler)
     window.addEventListener('mouseup', () => {
-        window.removeEventListener('mousemove', widgets[widgetName].moveHandler)
+        if (widgets[widgetName].moveHandler) {
+            window.removeEventListener('mousemove', widgets[widgetName].moveHandler)
+        }
     })
 }
-
-
 </script>
 
 <template>
