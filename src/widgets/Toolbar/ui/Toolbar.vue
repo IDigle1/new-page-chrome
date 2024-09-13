@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { CalcIcon, NoteIcon } from '@/app/assets/icons';
+import { CalcIcon, NoteIcon, ToDoIcon } from '@/app/assets/icons';
 import { type PropType, computed, ref } from 'vue';
-import { useWidgetsStore } from '@/entities/widgets'
+import { useWidgetsStore, widgets } from '@/entities/widgets'
 
 const widgetStore = useWidgetsStore()
 
@@ -26,19 +26,12 @@ const toggleCalcWidget = (widgetName: string) => {
     <div class="fixed bottom-2 max-h-fit flex justify-center w-full">
         <div class="flex rounded-lg shadow-md p-1 bg-white gap-2">
             <button
-                :class="{'bg-blue-400': widgetStore.isWidgetActive('calc')}"
+                v-for="w in widgets"
+                :class="{'bg-blue-400': widgetStore.isWidgetActive(w.name)}"
                 class="rounded-lg p-1"
-                @click="toggleCalcWidget('calc')"
+                @click="toggleCalcWidget(w.name)"
             >
-                <CalcIcon class="w-8 h-8" />
-            </button>
-
-            <button
-                :class="{'bg-blue-400': widgetStore.isWidgetActive('note')}"
-                class="rounded-lg p-1"
-                @click="toggleCalcWidget('note')"
-            >
-                <NoteIcon class="w-8 h-8" />
+                <component :is="w.icon"  class="w-8 h-8" />
             </button>
         </div>
     </div>

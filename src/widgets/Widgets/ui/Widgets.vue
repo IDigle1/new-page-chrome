@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { useWidgetsStore } from '@/entities/widgets'
-import { Calculator } from '@/features/Calculator'
-import { Note } from '@/features/Note'
+import { useWidgetsStore, widgets } from '@/entities/widgets'
 import type { ComponentInstance } from 'vue';
 
 type MoveHandler = (we: any) => any
@@ -12,17 +10,14 @@ interface IWidgets {
         moveHandler: MoveHandler | null
     }
 }
+const createWidgetsState = () => {
+    const stateEtries = widgets.map(w => [w.name, { component: w.component, moveHandler: null }])
 
-const widgets: IWidgets = {
-    calc: {
-        component: Calculator,
-        moveHandler: null 
-    },
-    note: {
-        component: Note,
-        moveHandler: null
-    },
+    return Object.fromEntries(stateEtries)
 }
+
+const widgetsState: IWidgets = createWidgetsState()
+
 
 const widgetStore = useWidgetsStore()
 
@@ -33,11 +28,11 @@ const move = (e: any, widgetName: string) => {
 }
 
 const mousedownHanler = (e: MouseEvent, widgetName: string) => {
-    widgets[widgetName].moveHandler = move(e, widgetName)
-    window.addEventListener('mousemove', widgets[widgetName].moveHandler)
+    widgetsState[widgetName].moveHandler = move(e, widgetName)
+    window.addEventListener('mousemove', widgetsState[widgetName].moveHandler)
     window.addEventListener('mouseup', () => {
-        if (widgets[widgetName].moveHandler) {
-            window.removeEventListener('mousemove', widgets[widgetName].moveHandler)
+        if (widgetsState[widgetName].moveHandler) {
+            window.removeEventListener('mousemove', widgetsState[widgetName].moveHandler)
         }
     })
 }
@@ -45,9 +40,9 @@ const mousedownHanler = (e: MouseEvent, widgetName: string) => {
 
 <template>
     <component
-        v-for="w in widgetStore.widgets"
+        v-for="w in widgetStore.widgetsState"
         :ref="w.name"
-        :is="widgets[w.name as keyof typeof widgets].component"
+        :is="widgetsState[w.name as keyof typeof widgetsState].component"
         :key="w.name"
         :class="`fixed`"
         :style="`left: ${w.posX}px; top: ${w.posY}px`"
