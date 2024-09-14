@@ -24,8 +24,10 @@ const createTaskHandler = (task: IToDo) => {
 <template>
     <div class="overflow-hidden rounded-lg shadow-md bg-white w-96 h-80">
         <div class="h-full relative">
-            <div class="flex justify-center text-gray-600 py-3 border-b border-gray-200">Список дел</div>
-            <ElButton 
+            <div class="flex justify-center items-center text-gray-600 py-3 border-b border-gray-200">Список дел</div>
+
+            <ElButton
+                v-if="!currentTodoId"
                 class="absolute top-[9px] right-1"
                 text
                 @click="showAddTaskModal = true"
@@ -33,12 +35,25 @@ const createTaskHandler = (task: IToDo) => {
             >
                 <Plus class="w-4 h-4" />
             </ElButton>
+
+            <button
+                v-else
+                class="absolute top-[18px] right-4 flex flex-col gap-[3px]"
+                @click="currentTodoId = null"
+                @mousedown.stop
+            >
+                <div class="h-[2px] w-4 bg-slate-600 rounded"></div>
+                <div class="h-[2px] w-4 bg-slate-600 rounded"></div>
+                <div class="h-[2px] w-4 bg-slate-600 rounded"></div>
+            </button>
+
             <div class="flex flex-col gap-1 h-full p-1 bg-gray-50" v-if="!currentTodoId">
                 <template v-if="list.length">
                     <div
                         v-for="l in list"
                         :key="l.id"
                         class="flex justify-between items-center bg-white rounded-lg py-2 px-4 text-gray-500 shadow"
+                        @click="currentTodoId = l.id"
                     >
                         <div>
                             {{ l.title }}
@@ -61,7 +76,10 @@ const createTaskHandler = (task: IToDo) => {
                     Список дел пуст
                 </div>
             </div>
-            <div class="h-full">
+            <div 
+                v-else
+                class="h-full bg-gray-50 p-1"
+            >
                 <div class="h-6">
                     {{ getCurrentToDo?.title }}
                 </div>

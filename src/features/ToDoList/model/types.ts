@@ -4,5 +4,6 @@ export interface IToDo {
     description: string
     isDone: boolean
     createDate: string
-    endDate: string
+    endDate: string,
+    archived: boolean
 }
